@@ -9,12 +9,12 @@ LABEL org.opencontainers.image.source="https://github.com/EwaGorskaa/pawcho6"
 # ustawienie katalogu roboczego
 WORKDIR /app
 
-RUN apk add --no-cache git openssh-client 
+# instalowanie narzędzi do SSH, GIT oraz tworzenie katalogu .ssh i dodanie klucza SSH
+RUN apk add --no-cache git openssh-client && \
+mkdir -p ~/.ssh && chmod 700 ~/.ssh && \
+ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-RUN mkdir -p ~/.ssh && chmod 700 ~/.ssh
-
-RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
-
+# klonowanie repozytorium z GitHub za pomocą SSH
 RUN --mount=type=ssh git clone git@github.com:EwaGorskaa/pawcho6.git /app 
 
 
