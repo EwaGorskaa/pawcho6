@@ -1,9 +1,20 @@
+# syntax=docker/dockerfile:1.2
+
 FROM scratch AS stage1
 # dodanie minimalnego systemu plików
 ADD alpine-minirootfs-3.21.3-x86_64.tar /
 
 # ustawienie katalogu roboczego
 WORKDIR /app
+
+RUN apk add --no-cache git openssh-client 
+
+RUN mkdir -p ~/.ssh && chmod 700 ~/.ssh
+
+RUN ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+RUN --mount=type=ssh git clone git@github.com:EwaGorskaa/pawcho6.git /app 
+
 
 # dodanie plików aplikacji do kontenera
 COPY ./package.json serwer.js ./
