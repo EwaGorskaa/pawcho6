@@ -4,6 +4,8 @@ FROM scratch AS stage1
 # dodanie minimalnego systemu plików
 ADD alpine-minirootfs-3.21.3-x86_64.tar /
 
+LABEL org.opencontainers.image.source="https://github.com/EwaGorskaa/pawcho6"
+
 # ustawienie katalogu roboczego
 WORKDIR /app
 
