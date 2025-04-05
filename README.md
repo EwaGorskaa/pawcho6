@@ -1,24 +1,31 @@
-# Multi-stage Build
-Sprawozdanie z Laboratorium 5  
+# Multi-stage Build with SSH
+Sprawozdanie z Laboratorium 6 
 Ewa Górska
 
 - Zbudowanie obrazu:
   
   ```
-   docker build --build-arg VERSION=BETA -t local/lab5_EG:v2 .
+   DOCKER_BUILDKIT=1 docker build --ssh default --build-arg VERSION=BETA -t ghcr.io/ewagorskaa/lab6:v6 .
+
   ```
-- Uruchomienie serwera:
+- Wypchnięcie obrazu do repo:
   
   ```
-  docker run -p 8083:8083 local/lab5_EG:v2
+  docker push ghcr.io/ewagorskaa/lab6:v6
+  
   ```
+  
 - Test działania:
-  - Przeglądarka:
+  1. Uruchomienie serwera:
+    ```
+    docker run -p 8083:8083 ghcr.io/ewagorskaa/lab6:v6
+    ```
+  2. Przeglądarka:
     
     ```
     http://localhost:8083
     ```
-  - Konsola:
+  3. Konsola:
     
     ```
     curl -v http://localhost:8083
